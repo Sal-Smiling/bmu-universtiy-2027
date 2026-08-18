@@ -30,10 +30,21 @@ import { imageProcessor } from './src/middleware/imageProcessor.js';
 // Load environment variables
 dotenv.config();
 
-// Connect to MongoDB
-connectDB();
-
 const app = express();
+
+app.get('/api/ping', (req, res) => {
+  res.status(200).send('Vercel is alive');
+});
+
+// Ensure DB is connected for serverless environments before handling requests
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Database connection failed' });
+  }
+});
 
 // Security Header Middleware - customized to allow React SPA scripts, Google Fonts, and external image libraries
 app.use(
