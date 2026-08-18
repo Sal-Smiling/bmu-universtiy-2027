@@ -6,8 +6,8 @@ import mongoose from 'mongoose';
  */
 const connectDB = async () => {
   try {
-    // Hardcoded to ensure Render connects even if environment variables are misconfigured
-    const uri = 'mongodb+srv://bonamarywebsite_db:BmuWebsite2026%23@bmuweb.dtuwgai.mongodb.net/BmuWeb?retryWrites=true&w=majority&appName=BmuWeb';
+    // Hardcoded direct replica set string to bypass Render/Atlas SRV DNS resolution issues causing SSL Alert 80
+    const uri = 'mongodb://bonamarywebsite_db:BmuWebsite2026%23@ac-huxtikl-shard-00-00.dtuwgai.mongodb.net:27017,ac-huxtikl-shard-00-01.dtuwgai.mongodb.net:27017,ac-huxtikl-shard-00-02.dtuwgai.mongodb.net:27017/BmuWeb?ssl=true&replicaSet=atlas-huxtikl-shard-0&authSource=admin&retryWrites=true&w=majority';
 
     let connected = false;
     while (!connected) {
