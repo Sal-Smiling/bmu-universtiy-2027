@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import connectDB from './src/config/db.js';
+/*
 import programRoutes from './src/routes/programRoutes.js';
 import newsRoutes from './src/routes/newsRoutes.js';
 import applicationRoutes from './src/routes/applicationRoutes.js';
@@ -21,6 +22,7 @@ import campusLifeRoutes from './src/routes/campusLifeRoutes.js';
 import communityServiceRoutes from './src/routes/communityServiceRoutes.js';
 import partnershipRoutes from './src/routes/partnershipRoutes.js';
 import facultyRoutes from './src/routes/facultyRoutes.js';
+*/
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -38,12 +40,7 @@ app.get('/api/ping', (req, res) => {
 
 // Ensure DB is connected for serverless environments before handling requests
 app.use(async (req, res, next) => {
-  try {
-    await connectDB();
-    next();
-  } catch (err) {
-    res.status(500).json({ success: false, message: 'Database connection failed' });
-  }
+  next();
 });
 
 // Security Header Middleware - customized to allow React SPA scripts, Google Fonts, and external image libraries
@@ -57,7 +54,7 @@ app.use(
 // CORS Configuration - allow frontend on localhost:5173 and production domains
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000', process.env.CLIENT_URL || '*'],
+    origin: '*',
     credentials: true,
   })
 );
@@ -73,14 +70,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // API Health Check Route
 app.get('/api/health', (req, res) => {
-  const dbStatus = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected (' + mongoose.connection.readyState + ')';
-  res.status(200).json({
-    success: true,
-    status: 'ONLINE',
-    database: dbStatus,
-    server: 'BMU University API Foundry v1.0',
-    timestamp: new Date().toISOString(),
-  });
+  res.status(200).json({ success: true, status: 'ONLINE' });
 });
 
 // Root Health Check for Render
@@ -89,9 +79,10 @@ app.get('/', (req, res) => {
 });
 
 // Image Processing Middleware
-app.use(imageProcessor);
+// app.use(imageProcessor);
 
 // Mount API Routes
+/*
 app.use('/api/v1/programs', programRoutes);
 app.use('/api/v1/news', newsRoutes);
 app.use('/api/v1/applications', applicationRoutes);
@@ -108,8 +99,10 @@ app.use('/api/v1/campus-life', campusLifeRoutes);
 app.use('/api/v1/community-services', communityServiceRoutes);
 app.use('/api/v1/partnerships', partnershipRoutes);
 app.use('/api/v1/faculties', facultyRoutes);
+*/
 
 // Skip static file serving in Vercel Serverless environment
+/*
 if (!process.env.VERCEL) {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -125,10 +118,11 @@ if (!process.env.VERCEL) {
     });
   }
 }
+*/
 
 // Error Handling Middleware
-app.use(notFound);
-app.use(errorHandler);
+// app.use(notFound);
+// app.use(errorHandler);
 
 const PORT = process.env.PORT || 10000;
 
