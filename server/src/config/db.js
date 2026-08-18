@@ -19,9 +19,9 @@ const connectDB = async () => {
     const uri = 'mongodb+srv://bonamarywebsite_db:BmuWebsite2026%23@bmuweb.dtuwgai.mongodb.net/BmuWeb?retryWrites=true&w=majority&appName=BmuWeb';
     
     cached.promise = mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 30000,
       socketTimeoutMS: 45000,
-      bufferCommands: false, // Fail fast in serverless
+      bufferCommands: false, // Fail fast in serverless after connection
     }).then((mongoose) => {
       console.log(`[MongoDB Connected]: ${mongoose.connection.host}`);
       return mongoose;
