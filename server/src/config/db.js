@@ -16,14 +16,12 @@ const connectDB = async () => {
   }
 
   if (!cached.promise) {
-    // Use direct replica set URI instead of SRV to bypass Vercel DNS timeouts and false-positive IP whitelist errors
-    const uri = 'mongodb://bonamarywebsite_db:BmuWebsite2026%23@ac-huxtikl-shard-00-00.dtuwgai.mongodb.net:27017,ac-huxtikl-shard-00-01.dtuwgai.mongodb.net:27017,ac-huxtikl-shard-00-02.dtuwgai.mongodb.net:27017/BmuWeb?ssl=true&replicaSet=atlas-9eacnd-shard-0&authSource=admin&retryWrites=true&w=majority';
+    const uri = 'mongodb+srv://bonamarywebsite_db:BmuWebsite2026%23@bmuweb.dtuwgai.mongodb.net/BmuWeb?retryWrites=true&w=majority&appName=BmuWeb';
     
     cached.promise = mongoose.connect(uri, {
       serverSelectionTimeoutMS: 30000,
       socketTimeoutMS: 45000,
       bufferCommands: false, // Fail fast in serverless after connection
-      family: 4, // Force IPv4 (Node 20 defaults to IPv6, which Atlas Free Tier doesn't support)
     }).then((mongoose) => {
       console.log(`[MongoDB Connected]: ${mongoose.connection.host}`);
       return mongoose;
