@@ -15,10 +15,7 @@ const connectDB = async () => {
     console.log(`[MongoDB Connected]: ${conn.connection.host} (${conn.connection.name})`);
   } catch (error) {
     console.error(`[MongoDB Connection Error]: ${error.message}`);
-    // Do not terminate process in development so offline local fallback in client can work smoothly
-    if (process.env.NODE_ENV === 'production') {
-      process.exit(1);
-    }
+    // Server will continue running and Mongoose will retry in the background
   }
 };
 

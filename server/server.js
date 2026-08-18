@@ -69,6 +69,11 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Root Health Check for Render
+app.get('/', (req, res) => {
+  res.status(200).send('BMU Server is running.');
+});
+
 // Image Processing Middleware
 app.use(imageProcessor);
 
