@@ -15,8 +15,6 @@ const connectDB = async () => {
         const conn = await mongoose.connect(uri, {
           serverSelectionTimeoutMS: 5000,
           socketTimeoutMS: 45000,
-          tls: true,
-          tlsServerName: 'bmuweb.dtuwgai.mongodb.net',
           family: 4 // Force IPv4
         });
         console.log(`[MongoDB Connected]: ${conn.connection.host} (${conn.connection.name})`);
