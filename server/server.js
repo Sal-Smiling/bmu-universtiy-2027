@@ -61,9 +61,11 @@ if (process.env.NODE_ENV === 'development') {
 
 // API Health Check Route
 app.get('/api/health', (req, res) => {
+  const dbStatus = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected (' + mongoose.connection.readyState + ')';
   res.status(200).json({
     success: true,
     status: 'ONLINE',
+    database: dbStatus,
     server: 'BMU University API Foundry v1.0',
     timestamp: new Date().toISOString(),
   });
