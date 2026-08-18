@@ -57,7 +57,7 @@ app.use(
 // CORS Configuration - allow frontend on localhost:5173 and production domains
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000', process.env.CLIENT_URL || '*'],
+    origin: ['http://localhost:5173', 'http://localhost:3000', 'https://aab14c8de47eec49-203-189-154-17.serveousercontent.com', process.env.CLIENT_URL || '*'],
     credentials: true,
   })
 );

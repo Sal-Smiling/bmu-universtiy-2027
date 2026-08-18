@@ -2,7 +2,6 @@ import axios from 'axios';
 import { programsData } from '../data/programsData';
 import { newsData } from '../data/newsData';
 
-// const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://bmu-universtiy-2027.onrender.com/api/v1';
 
 const apiClient = axios.create({
