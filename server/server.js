@@ -118,10 +118,14 @@ if (fs.existsSync(clientBuildPath)) {
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 10000;
 
-app.listen(PORT, () => {
-  console.log(`🚀 [BMU Server Active]: Running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
-});
+// Only listen if not running in a serverless environment (like Vercel)
+if (process.env.NODE_ENV !== 'production' || process.env.RENDER) {
+  app.listen(PORT, () => {
+    console.log(`🚀 [BMU Server Active]: Running in production mode on port ${PORT}`);
+  });
+}
 
+// Export for Vercel serverless
 export default app;
