@@ -23,6 +23,7 @@ const connectDB = async () => {
       serverSelectionTimeoutMS: 30000,
       socketTimeoutMS: 45000,
       bufferCommands: false, // Fail fast in serverless after connection
+      family: 4, // Force IPv4 (Node 20 defaults to IPv6, which Atlas Free Tier doesn't support)
     }).then((mongoose) => {
       console.log(`[MongoDB Connected]: ${mongoose.connection.host}`);
       return mongoose;
