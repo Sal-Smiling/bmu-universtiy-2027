@@ -3,8 +3,11 @@ import path from 'path';
 // import sharp from 'sharp';
 
 const UPLOADS_DIR = path.join(process.cwd(), 'uploads');
-if (!fs.existsSync(UPLOADS_DIR)) {
-  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+// Skip directory creation in serverless environments (read-only filesystem)
+if (!process.env.VERCEL) {
+  if (!fs.existsSync(UPLOADS_DIR)) {
+    fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+  }
 }
 
 // Helper to check if string is a base64 image URL
