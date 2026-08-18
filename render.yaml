@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: bmu-backend-api
+    env: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGO_URI
+        fromDatabase:
+          name: bmu-mongo-db
+          property: connectionString
+
+  - type: web
+    name: bmu-frontend-client
+    env: static
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://bmu-backend-api.onrender.com/api/v1
+
+databases:
+  - name: bmu-mongo-db
+    databaseName: bmu_university
+    user: bmu_admin

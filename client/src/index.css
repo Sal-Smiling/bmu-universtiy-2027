@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bmu-red: #E60000;
+    --bmu-pink: #FF4D85;
+    --bmu-bg: #F8FAFC;
+    --bmu-surface: #FFFFFF;
+    --bmu-card: #FFFFFF;
+  }
+
+
+  /* Global Khmer Font Fallback */
+  *, body, input, button, textarea, h1, h2, h3, h4, h5, h6, p, span, a, div {
+    font-family: Outfit, Inter, 'Kantumruy Pro', sans-serif;
+  }
+
+  /* Khmer Font Override */
+  .lang-kh, .lang-kh body, .lang-kh input, .lang-kh button, .lang-kh textarea, .lang-kh h1, .lang-kh h2, .lang-kh h3, .lang-kh h4, .lang-kh h5, .lang-kh h6, .lang-kh p, .lang-kh span, .lang-kh a {
+    font-family: 'Kantumruy Pro', Outfit, Inter, sans-serif !important;
+  }
+
+  body {
+    @apply bg-bmu-bg text-slate-800 antialiased overflow-x-hidden;
+    background-color: #F8FAFC;
+    color: #1E293B;
+  }
+
+  /* Automatically map dark text/border classes to crisp natural light mode equivalents */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-slate-900 font-extrabold tracking-tight;
+  }
+}
+
+/* Custom Smooth Natural Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8FAFC;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+  border: 2px solid #F8FAFC;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #E60000, #FF4D85);
+}
+
+/* Glassmorphism & Natural Light UI Utilities */
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-natural;
+  }
+  
+  .glass-card {
+    @apply bg-white/90 backdrop-blur-lg border border-slate-200 hover:border-bmu-pink/40 transition-all duration-300 shadow-natural hover:shadow-xl;
+  }
+
+  .text-gradient-bmu {
+    @apply bg-gradient-to-r from-bmu-red via-[#FF2A6D] to-bmu-pink bg-clip-text text-transparent font-black;
+  }
+
+  .border-gradient-bmu {
+    border-image: linear-gradient(to right, #E60000, #FF4D85) 1;
+  }
+
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-glow-bmu hover:-translate-y-0.5;
+  }
+}
+
+/* Infinite Scrolling Marquee Animation with Pause on Hover */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee:hover,
+.group:hover .animate-marquee {
+  animation-play-state: paused !important;
+}
