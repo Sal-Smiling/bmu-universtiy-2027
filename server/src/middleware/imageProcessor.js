@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import sharp from 'sharp';
+// import sharp from 'sharp';
 
 const UPLOADS_DIR = path.join(process.cwd(), 'uploads');
 if (!fs.existsSync(UPLOADS_DIR)) {
@@ -14,25 +14,7 @@ const isBase64Image = (str) => {
 
 // Convert Base64 to WebP and save to disk
 const processBase64ToWebP = async (base64String) => {
-  try {
-    const matches = base64String.match(/^data:image\/([A-Za-z-+\/]+);base64,(.+)$/);
-    if (!matches || matches.length !== 3) {
-      return base64String; // Return original if invalid format
-    }
-
-    const imageBuffer = Buffer.from(matches[2], 'base64');
-    const uniqueFilename = `img-${Date.now()}-${Math.round(Math.random() * 1E9)}.webp`;
-    const outputPath = path.join(UPLOADS_DIR, uniqueFilename);
-
-    await sharp(imageBuffer)
-      .webp({ quality: 80, effort: 4 }) // Aggressive compression for web
-      .toFile(outputPath);
-
-    return `/uploads/${uniqueFilename}`;
-  } catch (err) {
-    console.error('Error processing image with sharp:', err);
-    return base64String; // Fallback to original Base64 if conversion fails
-  }
+  return base64String;
 };
 
 // Deep traverse an object or array and replace Base64 strings with WebP URLs
