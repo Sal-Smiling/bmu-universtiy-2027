@@ -6,27 +6,25 @@ import mongoose from 'mongoose';
  */
 const connectDB = async () => {
   try {
-    // Hardcoded to ensure Render connects even if environment variables are misconfigured
     const uri = 'mongodb+srv://bonamarywebsite_db:BmuWebsite2026%23@bmuweb.dtuwgai.mongodb.net/BmuWeb?retryWrites=true&w=majority&appName=BmuWeb';
 
-    let connected = false;
-    while (!connected) {
-      try {
-        const conn = await mongoose.connect(uri, {
-          serverSelectionTimeoutMS: 5000,
-          socketTimeoutMS: 45000,
-          family: 4 // Force IPv4
-        });
-        console.log(`[MongoDB Connected]: ${conn.connection.host} (${conn.connection.name})`);
-        connected = true;
-      } catch (error) {
-        console.error(`[MongoDB Connection Error]: ${error.message}`);
-        console.log('Retrying connection in 5 seconds...');
-        await new Promise(resolve => setTimeout(resolve, 5000));
-      }
+    // In serverless environments, we shouldn't infinitely loop on connection failure.
+    // We should fail fast so the function doesn't timeout.
+    if (mongoose.connection.readyState >= 1) {
+      return;
     }
+
+    const conn = await mongoose.connect(uri, {
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    });
+    console.log(`[MongoDB Connected]: ${conn.connection.host} (${conn.connection.name})`);
   } catch (error) {
-    console.error('Fatal database error:', error);
+    console.error(`[MongoDB Connection Error]: ${error.message}`);
+    // Do not exit process in serverless, just throw error
+    if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+      process.exit(1);
+    }
   }
 };
 
