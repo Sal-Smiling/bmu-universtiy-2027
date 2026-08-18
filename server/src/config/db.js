@@ -6,8 +6,9 @@ import mongoose from 'mongoose';
  */
 const connectDB = async () => {
   try {
-    const uri = process.env.MONGO_URI || process.env.MONGODB_URI || 'mongodb://localhost:27017/bmu_university';
-    
+    // Hardcoded to ensure Render connects even if environment variables are misconfigured
+    const uri = 'mongodb+srv://bonamarywebsite_db:BmuWebsite2026%23@bmuweb.dtuwgai.mongodb.net/BmuWeb?retryWrites=true&w=majority&appName=BmuWeb';
+
     let connected = false;
     while (!connected) {
       try {
