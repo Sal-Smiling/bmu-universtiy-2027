@@ -4,8 +4,11 @@ import fs from 'fs';
 
 // Ensure uploads directory exists
 const uploadDir = path.join(process.cwd(), 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+// Skip directory creation in Vercel Serverless environment
+if (!process.env.VERCEL) {
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
 }
 
 const storage = multer.diskStorage({
