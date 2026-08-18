@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import mongoose from 'mongoose';
 import connectDB from './src/config/db.js';
 import programRoutes from './src/routes/programRoutes.js';
 import newsRoutes from './src/routes/newsRoutes.js';
