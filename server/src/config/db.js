@@ -16,7 +16,8 @@ const connectDB = async () => {
   }
 
   if (!cached.promise) {
-    const uri = 'mongodb+srv://bonamarywebsite_db:BmuWebsite2026%23@bmuweb.dtuwgai.mongodb.net/BmuWeb?retryWrites=true&w=majority&appName=BmuWeb';
+    // Use direct replica set URI instead of SRV to bypass Vercel DNS timeouts and false-positive IP whitelist errors
+    const uri = 'mongodb://bonamarywebsite_db:BmuWebsite2026%23@ac-huxtikl-shard-00-00.dtuwgai.mongodb.net:27017,ac-huxtikl-shard-00-01.dtuwgai.mongodb.net:27017,ac-huxtikl-shard-00-02.dtuwgai.mongodb.net:27017/BmuWeb?ssl=true&replicaSet=atlas-9eacnd-shard-0&authSource=admin&retryWrites=true&w=majority';
     
     cached.promise = mongoose.connect(uri, {
       serverSelectionTimeoutMS: 30000,
