@@ -109,20 +109,21 @@ app.use('/api/v1/community-services', communityServiceRoutes);
 app.use('/api/v1/partnerships', partnershipRoutes);
 app.use('/api/v1/faculties', facultyRoutes);
 
-// Serve static uploaded files (PDFs and images)
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Skip static file serving in Vercel Serverless environment
+if (!process.env.VERCEL) {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Serve Frontend SPA from client/dist when compiled
-const clientBuildPath = path.resolve(__dirname, '../client/dist');
-if (fs.existsSync(clientBuildPath)) {
-  app.use(express.static(clientBuildPath));
-  app.get('*', (req, res, next) => {
-    if (req.originalUrl.startsWith('/api/') || req.originalUrl.startsWith('/uploads/')) {
-      return next();
-    }
-    res.sendFile(path.join(clientBuildPath, 'index.html'));
-  });
+  const clientBuildPath = path.resolve(__dirname, '../client/dist');
+  if (fs.existsSync(clientBuildPath)) {
+    app.use(express.static(clientBuildPath));
+    app.get('*', (req, res, next) => {
+      if (req.originalUrl.startsWith('/api/') || req.originalUrl.startsWith('/uploads/')) {
+        return next();
+      }
+      res.sendFile(path.join(clientBuildPath, 'index.html'));
+    });
+  }
 }
 
 // Error Handling Middleware
