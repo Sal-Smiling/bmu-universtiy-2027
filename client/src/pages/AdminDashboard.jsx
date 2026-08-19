@@ -595,6 +595,12 @@ const AdminDashboard = () => {
       } else if (csList && Array.isArray(csList) && csList.length === 0) {
         setCommunityServicesList([]);
       }
+      const nList = await fetchNews();
+      if (nList && Array.isArray(nList) && nList.length > 0) {
+        setNewsList(nList);
+      } else if (nList && Array.isArray(nList) && nList.length === 0) {
+        setNewsList([]);
+      }
     };
     loadData();
   }, []);
