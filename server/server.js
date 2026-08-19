@@ -54,10 +54,23 @@ app.use(
   })
 );
 
-// CORS Configuration - allow frontend on localhost:5173 and production domains
+// CORS Configuration
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000', 'https://aab14c8de47eec49-203-189-154-17.serveousercontent.com', process.env.CLIENT_URL || '*'],
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        'http://localhost:5173', 
+        'http://localhost:3000', 
+        'https://bmu-testing.freedev.app',
+        'https://bmu-universtiy-2027-server.vercel.app',
+        'https://bmu-universtiy-2027.onrender.com'
+      ];
+      if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app') || origin.endsWith('.freedev.app')) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   })
 );
