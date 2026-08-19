@@ -67,7 +67,7 @@ export const updateProgram = async (req, res, next) => {
   try {
     let program = await Program.findOne({ id: req.params.id });
     if (!program) {
-      program = await Program.findById(req.params.id);
+      program = await Program.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     }
     if (!program) {
       return res.status(404).json({ success: false, message: 'Program not found' });
@@ -90,7 +90,7 @@ export const deleteProgram = async (req, res, next) => {
   try {
     let program = await Program.findOne({ id: req.params.id });
     if (!program) {
-      program = await Program.findById(req.params.id);
+      program = await Program.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     }
     if (!program) {
       return res.status(404).json({ success: false, message: 'Program not found' });
@@ -101,3 +101,4 @@ export const deleteProgram = async (req, res, next) => {
     next(error);
   }
 };
+

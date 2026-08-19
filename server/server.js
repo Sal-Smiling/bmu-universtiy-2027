@@ -104,11 +104,19 @@ app.get('/', (req, res) => {
 // Image Processing Middleware
 app.use(imageProcessor);
 
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  next();
+});
+
 // Mount API Routes
 app.use('/api/v1/programs', programRoutes);
 app.use('/api/v1/news', newsRoutes);
 app.use('/api/v1/applications', applicationRoutes);
 app.use('/api/v1/contact', contactRoutes);
+// Routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/documents', documentRoutes);
 app.use('/api/v1/settings', settingRoutes);
@@ -154,3 +162,4 @@ if (process.env.NODE_ENV !== 'production' || process.env.RENDER) {
 
 // Export for Vercel serverless
 export default app;
+

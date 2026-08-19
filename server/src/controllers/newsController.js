@@ -62,18 +62,22 @@ export const createNews = async (req, res, next) => {
 // @access  Private/Admin
 export const updateNews = async (req, res, next) => {
   try {
-    let article = await News.findOne({ id: req.params.id });
-    if (!article) {
-      article = await News.findById(req.params.id);
+    let article;
+    if (req.params.id.length === 24) {
+      article = await News.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     }
+    if (!article) {
+      article = await News.findOne({ id: req.params.id });
+    }
+    
     if (!article) {
       return res.status(404).json({ success: false, message: 'News article not found' });
     }
     let updateData = { ...req.body };
     if (updateData._id) delete updateData._id;
 
-    const updatedArticle = await News.findOneAndUpdate(
-      { id: article.id },
+    const updatedArticle = await News.findByIdAndUpdate(
+      article._id,
       updateData,
       { new: true, runValidators: true }
     );
@@ -88,10 +92,14 @@ export const updateNews = async (req, res, next) => {
 // @access  Private/Admin
 export const deleteNews = async (req, res, next) => {
   try {
-    let article = await News.findOne({ id: req.params.id });
-    if (!article) {
-      article = await News.findById(req.params.id);
+    let article;
+    if (req.params.id.length === 24) {
+      article = await News.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     }
+    if (!article) {
+      article = await News.findOne({ id: req.params.id });
+    }
+
     if (!article) {
       return res.status(404).json({ success: false, message: 'News article not found' });
     }
@@ -101,3 +109,4 @@ export const deleteNews = async (req, res, next) => {
     next(error);
   }
 };
+

@@ -25,7 +25,7 @@ export const getEventById = async (req, res, next) => {
   try {
     let event = await Event.findOne({ id: req.params.id });
     if (!event && req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-      event = await Event.findById(req.params.id);
+      event = await Event.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     }
     if (!event) {
       return res.status(404).json({ success: false, message: 'Event not found' });
@@ -49,7 +49,7 @@ export const updateEvent = async (req, res, next) => {
   try {
     let event = await Event.findOne({ id: req.params.id });
     if (!event && req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-      event = await Event.findById(req.params.id);
+      event = await Event.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     }
     if (!event) {
       return res.status(404).json({ success: false, message: 'Event not found' });
@@ -69,7 +69,7 @@ export const deleteEvent = async (req, res, next) => {
   try {
     let event = await Event.findOne({ id: req.params.id });
     if (!event && req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-      event = await Event.findById(req.params.id);
+      event = await Event.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     }
     if (!event) {
       return res.status(404).json({ success: false, message: 'Event not found' });
@@ -80,3 +80,4 @@ export const deleteEvent = async (req, res, next) => {
     next(error);
   }
 };
+

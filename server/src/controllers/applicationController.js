@@ -45,3 +45,4 @@ export const getApplicationStatus = async (req, res, next) => {
     next(error);
   }
 };
+

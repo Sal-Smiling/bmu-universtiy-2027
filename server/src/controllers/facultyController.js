@@ -31,7 +31,7 @@ export const updateFaculty = async (req, res, next) => {
   try {
     let faculty = await Faculty.findOne({ id: req.params.id });
     if (!faculty) {
-      faculty = await Faculty.findById(req.params.id);
+      faculty = await Faculty.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     }
     if (!faculty) {
       return res.status(404).json({ success: false, message: 'Faculty not found' });
@@ -58,7 +58,7 @@ export const deleteFaculty = async (req, res, next) => {
   try {
     let faculty = await Faculty.findOne({ id: req.params.id });
     if (!faculty) {
-      faculty = await Faculty.findById(req.params.id);
+      faculty = await Faculty.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     }
     if (!faculty) {
       return res.status(404).json({ success: false, message: 'Faculty not found' });
@@ -69,3 +69,4 @@ export const deleteFaculty = async (req, res, next) => {
     next(error);
   }
 };
+

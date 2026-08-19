@@ -23,7 +23,7 @@ export const getInternships = async (req, res, next) => {
 
 export const getInternshipById = async (req, res, next) => {
   try {
-    const internship = await Internship.findOne({ id: req.params.id }) || await Internship.findById(req.params.id);
+    const internship = await Internship.findOne({ id: req.params.id }) || await Internship.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     if (!internship) {
       return res.status(404).json({ success: false, message: 'Internship not found' });
     }
@@ -44,7 +44,7 @@ export const createInternship = async (req, res, next) => {
 
 export const updateInternship = async (req, res, next) => {
   try {
-    let internship = await Internship.findOne({ id: req.params.id }) || await Internship.findById(req.params.id);
+    let internship = await Internship.findOne({ id: req.params.id }) || await Internship.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     if (!internship) {
       return res.status(404).json({ success: false, message: 'Internship not found' });
     }
@@ -61,7 +61,7 @@ export const updateInternship = async (req, res, next) => {
 
 export const deleteInternship = async (req, res, next) => {
   try {
-    let internship = await Internship.findOne({ id: req.params.id }) || await Internship.findById(req.params.id);
+    let internship = await Internship.findOne({ id: req.params.id }) || await Internship.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     if (!internship) {
       return res.status(404).json({ success: false, message: 'Internship not found' });
     }
@@ -71,3 +71,4 @@ export const deleteInternship = async (req, res, next) => {
     next(error);
   }
 };
+

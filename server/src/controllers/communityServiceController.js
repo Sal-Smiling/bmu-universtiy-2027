@@ -24,8 +24,7 @@ export const createCommunityService = async (req, res) => {
 // Update community service
 export const updateCommunityService = async (req, res) => {
   try {
-    const updatedItem = await CommunityService.findByIdAndUpdate(
-      req.params.id,
+    const updatedItem = await CommunityService.findOneAndUpdate({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] },
       req.body,
       { new: true }
     );
@@ -41,7 +40,7 @@ export const updateCommunityService = async (req, res) => {
 // Delete community service
 export const deleteCommunityService = async (req, res) => {
   try {
-    const deletedItem = await CommunityService.findByIdAndDelete(req.params.id);
+    const deletedItem = await CommunityService.findOneAndDelete({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     if (!deletedItem) {
       return res.status(404).json({ message: 'Community Service item not found' });
     }
@@ -50,3 +49,4 @@ export const deleteCommunityService = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+

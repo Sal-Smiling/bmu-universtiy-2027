@@ -24,8 +24,7 @@ export const createCampusLife = async (req, res) => {
 // Update campus life item
 export const updateCampusLife = async (req, res) => {
   try {
-    const updatedItem = await CampusLife.findByIdAndUpdate(
-      req.params.id,
+    const updatedItem = await CampusLife.findOneAndUpdate({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] },
       req.body,
       { new: true }
     );
@@ -38,9 +37,10 @@ export const updateCampusLife = async (req, res) => {
 // Delete campus life item
 export const deleteCampusLife = async (req, res) => {
   try {
-    await CampusLife.findByIdAndDelete(req.params.id);
+    await CampusLife.findOneAndDelete({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     res.json({ message: 'Campus life item deleted' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+

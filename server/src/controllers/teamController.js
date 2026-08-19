@@ -122,7 +122,7 @@ export const getTeamMembers = async (req, res, next) => {
 
 export const getTeamMemberById = async (req, res, next) => {
   try {
-    const member = await TeamMember.findOne({ id: req.params.id }) || await TeamMember.findById(req.params.id);
+    const member = await TeamMember.findOne({ id: req.params.id }) || await TeamMember.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     if (!member) {
       return res.status(404).json({ success: false, message: 'Team member not found' });
     }
@@ -150,7 +150,7 @@ export const createTeamMember = async (req, res, next) => {
 
 export const updateTeamMember = async (req, res, next) => {
   try {
-    let member = await TeamMember.findOne({ id: req.params.id }) || await TeamMember.findById(req.params.id);
+    let member = await TeamMember.findOne({ id: req.params.id }) || await TeamMember.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     if (!member) {
       return res.status(404).json({ success: false, message: 'Team member not found' });
     }
@@ -170,7 +170,7 @@ export const updateTeamMember = async (req, res, next) => {
 
 export const deleteTeamMember = async (req, res, next) => {
   try {
-    let member = await TeamMember.findOne({ id: req.params.id }) || await TeamMember.findById(req.params.id);
+    let member = await TeamMember.findOne({ id: req.params.id }) || await TeamMember.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     if (!member) {
       return res.status(404).json({ success: false, message: 'Team member not found' });
     }
@@ -224,3 +224,4 @@ export const stepReorderTeamMember = async (req, res, next) => {
     next(error);
   }
 };
+

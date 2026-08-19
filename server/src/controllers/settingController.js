@@ -60,3 +60,4 @@ export const deleteSetting = async (req, res, next) => {
     next(error);
   }
 };
+

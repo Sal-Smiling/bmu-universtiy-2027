@@ -112,7 +112,7 @@ export const uploadDocument = async (req, res) => {
 // @access  Private (Admin only)
 export const updateDocument = async (req, res) => {
   try {
-    const doc = await Document.findById(req.params.id);
+    const doc = await Document.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     if (doc) {
       doc.title = req.body.title || doc.title;
       doc.category = req.body.category || doc.category;
@@ -135,7 +135,7 @@ export const updateDocument = async (req, res) => {
 // @access  Private (Admin only)
 export const deleteDocument = async (req, res) => {
   try {
-    const doc = await Document.findById(req.params.id);
+    const doc = await Document.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     if (doc) {
       await doc.deleteOne();
       return res.status(200).json({ success: true, message: 'Document removed from archive' });
@@ -148,3 +148,4 @@ export const deleteDocument = async (req, res) => {
     res.status(200).json({ success: true, message: 'Document removed' });
   }
 };
+

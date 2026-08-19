@@ -22,7 +22,7 @@ export const getPartners = async (req, res, next) => {
 
 export const getPartnerById = async (req, res, next) => {
   try {
-    const partner = await Partner.findOne({ id: req.params.id }) || await Partner.findById(req.params.id);
+    const partner = await Partner.findOne({ id: req.params.id }) || await Partner.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     if (!partner) {
       return res.status(404).json({ success: false, message: 'Partner not found' });
     }
@@ -43,7 +43,7 @@ export const createPartner = async (req, res, next) => {
 
 export const updatePartner = async (req, res, next) => {
   try {
-    let partner = await Partner.findOne({ id: req.params.id }) || await Partner.findById(req.params.id);
+    let partner = await Partner.findOne({ id: req.params.id }) || await Partner.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     if (!partner) {
       return res.status(404).json({ success: false, message: 'Partner not found' });
     }
@@ -63,7 +63,7 @@ export const updatePartner = async (req, res, next) => {
 
 export const deletePartner = async (req, res, next) => {
   try {
-    let partner = await Partner.findOne({ id: req.params.id }) || await Partner.findById(req.params.id);
+    let partner = await Partner.findOne({ id: req.params.id }) || await Partner.findOne({ $or: [{ _id: req.params.id.match(/^[0-9a-fA-F]{24}$/) ? req.params.id : null }, { id: req.params.id }] });
     if (!partner) {
       return res.status(404).json({ success: false, message: 'Partner not found' });
     }
@@ -73,3 +73,4 @@ export const deletePartner = async (req, res, next) => {
     next(error);
   }
 };
+
