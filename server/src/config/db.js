@@ -16,7 +16,7 @@ const connectDB = async () => {
   }
 
   if (!cached.promise) {
-    const uri = 'mongodb+srv://bonamarywebsite_db:BmuWebsite2026%23@bmuweb.dtuwgai.mongodb.net/BmuWeb?retryWrites=true&w=majority&appName=BmuWeb';
+    const uri = 'mongodb+srv://pisal:Bumweb101@bmuweb.rxetoff.mongodb.net/BmuWeb?retryWrites=true&w=majority&appName=BMUWeb';
     
     cached.promise = mongoose.connect(uri, {
       serverSelectionTimeoutMS: 30000,
