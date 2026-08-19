@@ -67,7 +67,7 @@ const AdminDashboard = () => {
       reader.onloadend = () => {
         setPromoImage(reader.result);
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -141,7 +141,7 @@ const AdminDashboard = () => {
       reader.onloadend = () => {
         setNewIntlImage(reader.result);
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -637,7 +637,7 @@ const AdminDashboard = () => {
       reader.onloadend = () => {
         setNewFacultyImage(reader.result);
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -652,7 +652,7 @@ const AdminDashboard = () => {
       reader.onloadend = () => {
         setNewFacultyDeanPhoto(reader.result);
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -712,7 +712,7 @@ const AdminDashboard = () => {
       reader.onloadend = () => {
         setNewIntFacultyImage(reader.result);
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -727,7 +727,7 @@ const AdminDashboard = () => {
       reader.onloadend = () => {
         setNewIntFacultyDeanPhoto(reader.result);
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -807,7 +807,7 @@ const AdminDashboard = () => {
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onloadend = () => resolve(reader.result);
-        reader.readAsDataURL(file);
+        resizeAndReadAsDataURL(file, reader);
       });
     });
 
@@ -837,7 +837,7 @@ const AdminDashboard = () => {
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onloadend = () => resolve(reader.result);
-        reader.readAsDataURL(file);
+        resizeAndReadAsDataURL(file, reader);
       });
     });
 
@@ -926,7 +926,7 @@ const AdminDashboard = () => {
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onloadend = () => resolve(reader.result);
-        reader.readAsDataURL(file);
+        resizeAndReadAsDataURL(file, reader);
       });
     });
 
@@ -1200,7 +1200,7 @@ const AdminDashboard = () => {
       reader.onloadend = () => {
         setNewSlideImage(reader.result);
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -1249,7 +1249,7 @@ const AdminDashboard = () => {
       reader.onloadend = () => {
         setNewEmblemImage(reader.result);
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -1281,7 +1281,7 @@ const AdminDashboard = () => {
           banner: { ...prev.banner, image: reader.result }
         }));
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -1403,7 +1403,7 @@ const AdminDashboard = () => {
       reader.onloadend = () => {
         setNewEventImage(reader.result);
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -1414,7 +1414,7 @@ const AdminDashboard = () => {
       reader.onloadend = () => {
         setNewIntImage(reader.result);
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -1428,7 +1428,7 @@ const AdminDashboard = () => {
           data: { ...editingItem.data, image: reader.result }
         });
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -1439,7 +1439,7 @@ const AdminDashboard = () => {
       reader.onloadend = () => {
         setNewScholarshipImage1(reader.result);
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -1450,7 +1450,7 @@ const AdminDashboard = () => {
       reader.onloadend = () => {
         setNewScholarshipImage2(reader.result);
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -1466,7 +1466,7 @@ const AdminDashboard = () => {
           data: { ...editingItem.data, images: newImages }
         });
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -1482,7 +1482,7 @@ const AdminDashboard = () => {
           data: { ...editingItem.data, images: newImages }
         });
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -1496,7 +1496,7 @@ const AdminDashboard = () => {
           data: { ...editingItem.data, image: reader.result }
         });
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -1596,7 +1596,7 @@ const AdminDashboard = () => {
       reader.onloadend = () => {
         setNewCampusImage(reader.result);
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -1658,7 +1658,7 @@ const AdminDashboard = () => {
       reader.onloadend = () => {
         setNewCommunityImage(reader.result);
       };
-      reader.readAsDataURL(file);
+      resizeAndReadAsDataURL(file, reader);
     }
   };
 
@@ -3327,7 +3327,7 @@ const AdminDashboard = () => {
                             reader.onloadend = () => {
                               setNewTeamPhotoUrl(reader.result);
                             };
-                            reader.readAsDataURL(file);
+                            resizeAndReadAsDataURL(file, reader);
                           }
                         }}
                       />
@@ -4503,7 +4503,7 @@ const AdminDashboard = () => {
                                       data: { ...editingItem.data, image: reader.result }
                                     });
                                   };
-                                  reader.readAsDataURL(file);
+                                  resizeAndReadAsDataURL(file, reader);
                                 }
                               }}
                               className="hidden"
@@ -4575,7 +4575,7 @@ const AdminDashboard = () => {
                                       data: { ...editingItem.data, src: reader.result }
                                     });
                                   };
-                                  reader.readAsDataURL(file);
+                                  resizeAndReadAsDataURL(file, reader);
                                 }
                               }}
                               className="hidden"
@@ -4698,7 +4698,7 @@ const AdminDashboard = () => {
                                       data: { ...editingItem.data, photoUrl: reader.result }
                                     });
                                   };
-                                  reader.readAsDataURL(file);
+                                  resizeAndReadAsDataURL(file, reader);
                                 }
                               }}
                             />
@@ -5478,7 +5478,7 @@ const AdminDashboard = () => {
                                 return new Promise((resolve) => {
                                   const reader = new FileReader();
                                   reader.onloadend = () => resolve(reader.result);
-                                  reader.readAsDataURL(file);
+                                  resizeAndReadAsDataURL(file, reader);
                                 });
                               });
 
@@ -5619,7 +5619,7 @@ const AdminDashboard = () => {
                                     if (file.size > 2 * 1024 * 1024) return alert('File too large');
                                     const reader = new FileReader();
                                     reader.onloadend = () => setEditingItem({ ...editingItem, data: { ...editingItem.data, image: reader.result } });
-                                    reader.readAsDataURL(file);
+                                    resizeAndReadAsDataURL(file, reader);
                                   }
                                 }}
                                 className="w-full text-xs text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-extrabold file:bg-blue-100 file:text-blue-800 hover:file:bg-blue-200 cursor-pointer"
@@ -5653,7 +5653,7 @@ const AdminDashboard = () => {
                                       if (file.size > 2 * 1024 * 1024) return alert('File too large');
                                       const reader = new FileReader();
                                       reader.onloadend = () => setEditingItem({ ...editingItem, data: { ...editingItem.data, deanPhoto: reader.result } });
-                                      reader.readAsDataURL(file);
+                                      resizeAndReadAsDataURL(file, reader);
                                     }
                                   }}
                                   className="w-full text-xs text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-extrabold file:bg-blue-100 file:text-blue-800 hover:file:bg-blue-200 cursor-pointer"
@@ -5958,3 +5958,4 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
