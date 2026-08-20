@@ -29,6 +29,43 @@ import team4 from "../assets/team-4.png";
 import team5 from "../assets/team-5.jpg";
 import team6 from "../assets/team-6.png";
 
+const resizeAndReadAsDataURL = (file, reader) => {
+  if (!file.type.match(/image.*/)) {
+    reader.readAsDataURL(file);
+    return;
+  }
+  const img = document.createElement('img');
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    let width = img.width;
+    let height = img.height;
+    const MAX_SIZE = 1200;
+    if (width > height) {
+      if (width > MAX_SIZE) {
+        height *= MAX_SIZE / width;
+        width = MAX_SIZE;
+      }
+    } else {
+      if (height > MAX_SIZE) {
+        width *= MAX_SIZE / height;
+        height = MAX_SIZE;
+      }
+    }
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, width, height);
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+    // Simulate reader.onloadend
+    Object.defineProperty(reader, 'result', {
+      get: () => dataUrl,
+      configurable: true
+    });
+    if (reader.onloadend) reader.onloadend({ target: reader });
+  };
+  img.src = URL.createObjectURL(file);
+};
+
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('programs');
