@@ -128,20 +128,12 @@ const AdminDashboard = () => {
   const savePromoToDb = async (e) => {
     if (e) e.preventDefault();
     try {
-      await fetch('https://bmu-universtiy-2027-server.vercel.app/api/v1/settings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': 'BMU-ADMIN-2026'
-        },
-        body: JSON.stringify({
-          key: 'promo_advertisement',
-          tag: promoActive ? 'active' : 'inactive',
-          title: promoTitle,
-          subtitle: promoSubtitle,
-          content: promoDescription,
-          image: promoImage
-        })
+      await saveSetting('promo_advertisement', {
+        tag: promoActive ? 'active' : 'inactive',
+        title: promoTitle,
+        subtitle: promoSubtitle,
+        content: promoDescription,
+        image: promoImage
       });
       alert('Advertisement Campaign Saved!');
     } catch (err) {
@@ -168,16 +160,8 @@ const AdminDashboard = () => {
 
   const saveIntlGalleryToDb = async (newGallery) => {
     try {
-      await fetch('https://bmu-universtiy-2027-server.vercel.app/api/v1/settings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': 'BMU-ADMIN-2026'
-        },
-        body: JSON.stringify({
-          key: 'international_gallery',
-          slides: newGallery
-        })
+      await saveSetting('international_gallery', {
+        slides: newGallery
       });
     } catch (err) {
       console.error(err);
