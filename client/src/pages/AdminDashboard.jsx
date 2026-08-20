@@ -78,7 +78,7 @@ const AdminDashboard = () => {
   const [promoImage, setPromoImage] = useState('');
 
   useEffect(() => {
-    fetch('/api/v1/settings/promo_advertisement')
+    fetch('https://bmu-universtiy-2027-server.vercel.app/api/v1/settings/promo_advertisement')
       .then(res => res.json())
       .then(data => {
         if (data.success && data.data) {
@@ -111,7 +111,7 @@ const AdminDashboard = () => {
   const savePromoToDb = async (e) => {
     if (e) e.preventDefault();
     try {
-      await fetch('/api/v1/settings', {
+      await fetch('https://bmu-universtiy-2027-server.vercel.app/api/v1/settings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ const AdminDashboard = () => {
   const [newIntlImage, setNewIntlImage] = useState('');
 
   useEffect(() => {
-    fetch('/api/v1/settings/international_gallery')
+    fetch('https://bmu-universtiy-2027-server.vercel.app/api/v1/settings/international_gallery')
       .then(res => res.json())
       .then(data => {
         if (data.success && data.data && data.data.slides) {
@@ -151,7 +151,7 @@ const AdminDashboard = () => {
 
   const saveIntlGalleryToDb = async (newGallery) => {
     try {
-      await fetch('/api/v1/settings', {
+      await fetch('https://bmu-universtiy-2027-server.vercel.app/api/v1/settings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

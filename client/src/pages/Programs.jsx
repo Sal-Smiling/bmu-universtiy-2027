@@ -17,7 +17,7 @@ const Programs = () => {
   const [intlGalleryList, setIntlGalleryList] = useState([]);
 
   useEffect(() => {
-    fetch('/api/v1/settings/international_gallery')
+    fetch('https://bmu-universtiy-2027-server.vercel.app/api/v1/settings/international_gallery')
       .then(res => res.json())
       .then(data => {
         if (data.success && data.data && data.data.slides && data.data.slides.length > 0) {

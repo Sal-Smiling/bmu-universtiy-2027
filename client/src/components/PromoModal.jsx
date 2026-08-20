@@ -17,7 +17,7 @@ const PromoModal = () => {
   });
 
   useEffect(() => {
-    fetch('/api/v1/settings/promo_advertisement')
+    fetch('https://bmu-universtiy-2027-server.vercel.app/api/v1/settings/promo_advertisement')
       .then(res => res.json())
       .then(data => {
         if (data.success && data.data) {
