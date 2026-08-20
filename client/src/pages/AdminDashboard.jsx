@@ -29,6 +29,24 @@ import team4 from "../assets/team-4.png";
 import team5 from "../assets/team-5.jpg";
 import team6 from "../assets/team-6.png";
 
+const OriginalFileReader = window.FileReader;
+window.FileReader = function() {
+  const reader = new OriginalFileReader();
+  return new Proxy(reader, {
+    get(target, prop) {
+      if (prop === 'result' && target.__mockResult !== undefined) {
+        return target.__mockResult;
+      }
+      const val = target[prop];
+      return typeof val === 'function' ? val.bind(target) : val;
+    },
+    set(target, prop, value) {
+      target[prop] = value;
+      return true;
+    }
+  });
+};
+
 const resizeAndReadAsDataURL = (file, reader) => {
   if (!file.type.match(/image.*/)) {
     reader.readAsDataURL(file);
@@ -56,11 +74,10 @@ const resizeAndReadAsDataURL = (file, reader) => {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(img, 0, 0, width, height);
     const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
-    // Simulate reader.onloadend
-    Object.defineProperty(reader, 'result', {
-      get: () => dataUrl,
-      configurable: true
-    });
+    
+    // Set the mocked result for our Proxy
+    reader.__mockResult = dataUrl;
+    
     if (reader.onloadend) reader.onloadend({ target: reader });
   };
   img.src = URL.createObjectURL(file);
