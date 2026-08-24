@@ -1,7 +1,12 @@
 import fs from 'fs';
 import path from 'path';
-// import sharp from 'sharp';
+import { v2 as cloudinary } from 'cloudinary';
 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'dqbojrbs5',
+  api_key: process.env.CLOUDINARY_API_KEY || '118219649171455',
+  api_secret: process.env.CLOUDINARY_API_SECRET || 'cJTWJSeErSKDlZy-LD8W9Mpqdtc',
+});
 const UPLOADS_DIR = path.join(process.cwd(), 'uploads');
 // Skip directory creation in serverless environments (read-only filesystem)
 if (!process.env.VERCEL) {
@@ -15,9 +20,18 @@ const isBase64Image = (str) => {
   return typeof str === 'string' && str.startsWith('data:image/');
 };
 
-// Convert Base64 to WebP and save to disk
+// Upload Base64 to Cloudinary and return secure URL
 const processBase64ToWebP = async (base64String) => {
-  return base64String;
+  try {
+    const result = await cloudinary.uploader.upload(base64String, {
+      folder: 'bmu_university',
+      resource_type: 'auto',
+    });
+    return result.secure_url;
+  } catch (err) {
+    console.error('Cloudinary upload error in imageProcessor:', err);
+    return base64String; // Fallback to original string if upload fails
+  }
 };
 
 // Deep traverse an object or array and replace Base64 strings with WebP URLs
