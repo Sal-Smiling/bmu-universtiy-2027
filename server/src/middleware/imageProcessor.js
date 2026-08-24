@@ -34,24 +34,27 @@ const processBase64ToWebP = async (base64String) => {
   }
 };
 
-// Deep traverse an object or array and replace Base64 strings with WebP URLs
+// Deep traverse an object or array and replace Base64 strings with WebP URLs concurrently
 const traverseAndProcess = async (obj) => {
   if (Array.isArray(obj)) {
-    for (let i = 0; i < obj.length; i++) {
-      if (isBase64Image(obj[i])) {
-        obj[i] = await processBase64ToWebP(obj[i]);
-      } else if (typeof obj[i] === 'object' && obj[i] !== null) {
-        await traverseAndProcess(obj[i]);
+    const promises = obj.map(async (item, i) => {
+      if (isBase64Image(item)) {
+        obj[i] = await processBase64ToWebP(item);
+      } else if (typeof item === 'object' && item !== null) {
+        await traverseAndProcess(item);
       }
-    }
+    });
+    await Promise.all(promises);
   } else if (typeof obj === 'object' && obj !== null) {
-    for (const key in obj) {
+    const keys = Object.keys(obj);
+    const promises = keys.map(async (key) => {
       if (isBase64Image(obj[key])) {
         obj[key] = await processBase64ToWebP(obj[key]);
       } else if (typeof obj[key] === 'object' && obj[key] !== null) {
         await traverseAndProcess(obj[key]);
       }
-    }
+    });
+    await Promise.all(promises);
   }
 };
 
