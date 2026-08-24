@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { MapPin, Mail, Phone, Clock, Send, CheckCircle2, Sparkles, Building2, Globe, Loader2 } from 'lucide-react';
 import Container from '../components/Container';
 import Card from '../components/Card';
-import axios from 'axios';
+import apiClient from '../services/api';
 
 const Contact = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -16,7 +16,7 @@ const Contact = () => {
     setSubmitResult(null);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/contact', data);
+      const response = await apiClient.post('/contact', data);
       setSubmitResult({
         success: true,
         message: response.data.message || 'Thank you! Your inquiry has been received.',

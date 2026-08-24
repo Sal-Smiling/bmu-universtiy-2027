@@ -7,10 +7,9 @@ import Container from '../components/Container';
 import SectionTitle from '../components/SectionTitle';
 import Card from '../components/Card';
 import Button from '../components/Button';
-import axios from 'axios';
 import scholarshipP1 from '../assets/scholarship-p1.png';
 import scholarshipP2 from '../assets/scholarship-p2.png';
-import { fetchScholarships } from '../services/api';
+import apiClient, { fetchScholarships } from '../services/api';
 
 const Admission = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -81,7 +80,7 @@ const Admission = () => {
     setSubmitResult(null);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/applications', data);
+      const response = await apiClient.post('/applications', data);
       setSubmitResult({
         success: true,
         message: response.data.message || 'Application submitted successfully!',

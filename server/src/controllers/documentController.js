@@ -70,9 +70,9 @@ export const uploadDocument = async (req, res) => {
     let fileSize = '1.8 MB';
 
     if (req.file) {
-      fileUrl = `/uploads/${req.file.filename}`;
+      fileUrl = req.file.path; // Cloudinary returns the full URL in req.file.path
       fileName = req.file.originalname;
-      fileSize = `${(req.file.size / (1024 * 1024)).toFixed(2)} MB`;
+      fileSize = req.file.size ? `${(req.file.size / (1024 * 1024)).toFixed(2)} MB` : 'Unknown Size';
     } else if (req.body.fileUrl) {
       fileUrl = req.body.fileUrl;
       fileName = req.body.fileName || 'uploaded-document.pdf';
