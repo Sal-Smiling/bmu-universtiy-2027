@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { ShieldCheck, Lock, Mail, ArrowRight, Sparkles, Cpu, Key, CheckCircle2, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { login } from '../services/api';
 import Container from '../components/Container';
 import Card from '../components/Card';
 import bmuLogo from '../assets/logo.png';
@@ -13,13 +14,23 @@ const Login = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [portalType, setPortalType] = useState('Student Foundry');
 
+  const [loginError, setLoginError] = useState('');
+
   const onSubmit = async (data) => {
     setIsSubmitting(true);
-    setTimeout(() => {
+    setLoginError('');
+    try {
+      const res = await login(data.email, data.password);
+      if (res.success) {
+        setLoggedIn(true);
+        localStorage.setItem('bmu_admin_logged_in', 'true');
+        localStorage.setItem('token', res.token);
+      }
+    } catch (err) {
+      setLoginError(err.response?.data?.message || 'Login failed. Please check your credentials.');
+    } finally {
       setIsSubmitting(false);
-      setLoggedIn(true);
-      localStorage.setItem('bmu_admin_logged_in', 'true');
-    }, 1200);
+    }
   };
 
   return (
@@ -108,6 +119,7 @@ const Login = () => {
                   />
                 </div>
                 {errors.password && <span className="text-[11px] text-bmu-red mt-1 block">{errors.password.message}</span>}
+                {loginError && <span className="text-[11px] text-bmu-red mt-1 block">{loginError}</span>}
               </div>
 
               <div className="pt-2">
@@ -135,3 +147,4 @@ const Login = () => {
 };
 
 export default Login;
+
