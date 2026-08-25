@@ -1060,10 +1060,10 @@ const AdminDashboard = () => {
         setTimeout(() => setSettingsSuccess(''), 4500);
       }
     } else if (editingItem.type === 'mou') {
-      const updatedList = mouList.map((m) => (m.id === editingItem.data.id ? editingItem.data : m));
+      const updatedList = mouList.map((m) => ((m.id || m._id) === (editingItem.data.id || editingItem.data._id) ? editingItem.data : m));
       setMouList(updatedList);
       try {
-        await updatePartnership(editingItem.data.id, editingItem.data);
+        await updatePartnership(editingItem.data.id || editingItem.data._id, editingItem.data);
         const fresh = await fetchPartnerships();
         if (fresh && Array.isArray(fresh)) setMouList(fresh);
         setSettingsSuccess('Partnership updated successfully!');
@@ -1074,10 +1074,10 @@ const AdminDashboard = () => {
         setTimeout(() => setSettingsSuccess(''), 4500);
       }
     } else if (editingItem.type === 'team') {
-      const updatedList = teamList.map((t) => (t.id === editingItem.data.id ? editingItem.data : t));
+      const updatedList = teamList.map((t) => ((t.id || t._id) === (editingItem.data.id || editingItem.data._id) ? editingItem.data : t));
       setTeamList(updatedList);
       try {
-        await updateTeamMember(editingItem.data.id, editingItem.data);
+        await updateTeamMember(editingItem.data.id || editingItem.data._id, editingItem.data);
         const fresh = await fetchTeam();
         if (fresh && fresh.length > 0) setTeamList(fresh);
         setSettingsSuccess('Team member updated successfully!');
@@ -1085,10 +1085,10 @@ const AdminDashboard = () => {
         console.warn('Backend update failed for team member:', err);
       }
     } else if (editingItem.type === 'event') {
-      const updatedList = eventsList.map((ev) => (ev.id === editingItem.data.id ? editingItem.data : ev));
+      const updatedList = eventsList.map((ev) => ((ev.id || ev._id) === (editingItem.data.id || editingItem.data._id) ? editingItem.data : ev));
       setEventsList(updatedList);
       try {
-        await updateEvent(editingItem.data.id, editingItem.data);
+        await updateEvent(editingItem.data.id || editingItem.data._id, editingItem.data);
         const fresh = await fetchEvents();
         if (fresh && fresh.length > 0) setEventsList(fresh);
         setSettingsSuccess('Announcement updated successfully!');
@@ -1096,10 +1096,10 @@ const AdminDashboard = () => {
         console.warn('Backend update failed for announcement:', err);
       }
     } else if (editingItem.type === 'internship') {
-      const updatedList = internshipsList.map((int) => (int.id === editingItem.data.id ? editingItem.data : int));
+      const updatedList = internshipsList.map((int) => ((int.id || int._id) === (editingItem.data.id || editingItem.data._id) ? editingItem.data : int));
       setInternshipsList(updatedList);
       try {
-        await updateInternship(editingItem.data.id, editingItem.data);
+        await updateInternship(editingItem.data.id || editingItem.data._id, editingItem.data);
         const fresh = await fetchInternships();
         if (fresh && Array.isArray(fresh)) setInternshipsList(fresh);
         setSettingsSuccess('Internship & Career opportunity updated successfully!');
@@ -1107,10 +1107,10 @@ const AdminDashboard = () => {
         console.warn('Backend update failed for internship:', err);
       }
     } else if (editingItem.type === 'scholarship') {
-      const updatedList = scholarshipsList.map((s) => (s.id === editingItem.data.id ? editingItem.data : s));
+      const updatedList = scholarshipsList.map((s) => ((s.id || s._id) === (editingItem.data.id || editingItem.data._id) ? editingItem.data : s));
       setScholarshipsList(updatedList);
       try {
-        await updateScholarship(editingItem.data.id, editingItem.data);
+        await updateScholarship(editingItem.data.id || editingItem.data._id, editingItem.data);
         const fresh = await fetchScholarships();
         if (fresh && Array.isArray(fresh)) setScholarshipsList(fresh);
         setSettingsSuccess('Scholarship announcement updated successfully!');
@@ -1121,10 +1121,10 @@ const AdminDashboard = () => {
         setTimeout(() => setSettingsSuccess(''), 4500);
       }
     } else if (editingItem.type === 'campus-life') {
-      const updatedList = campusLifeList.map((c) => (c.id === editingItem.data.id ? editingItem.data : c));
+      const updatedList = campusLifeList.map((c) => ((c.id || c._id) === (editingItem.data.id || editingItem.data._id) ? editingItem.data : c));
       setCampusLifeList(updatedList);
       try {
-        await updateCampusLife(editingItem.data.id, editingItem.data);
+        await updateCampusLife(editingItem.data.id || editingItem.data._id, editingItem.data);
         const fresh = await fetchCampusLife();
         if (fresh && Array.isArray(fresh)) setCampusLifeList(fresh);
         setSettingsSuccess('Campus life photo updated successfully!');
@@ -1135,10 +1135,10 @@ const AdminDashboard = () => {
         setTimeout(() => setSettingsSuccess(''), 4500);
       }
     } else if (editingItem.type === 'community-service') {
-      const updatedList = communityServicesList.map((cs) => (cs.id === editingItem.data.id ? editingItem.data : cs));
+      const updatedList = communityServicesList.map((cs) => ((cs.id || cs._id) === (editingItem.data.id || editingItem.data._id) ? editingItem.data : cs));
       setCommunityServicesList(updatedList);
       try {
-        await updateCommunityService(editingItem.data.id, editingItem.data);
+        await updateCommunityService(editingItem.data.id || editingItem.data._id, editingItem.data);
         const fresh = await fetchCommunityServices();
         if (fresh && Array.isArray(fresh)) setCommunityServicesList(fresh);
         setSettingsSuccess('Community service updated successfully!');
@@ -2289,7 +2289,7 @@ const AdminDashboard = () => {
                         <span>Update</span>
                       </button>
                       <button
-                        onClick={() => handleDeleteDoc(doc.id)}
+                        onClick={() => handleDeleteDoc(doc.id || doc._id)}
                         className="px-4 py-2 rounded-xl bg-red-50 hover:bg-red-600 hover:text-white text-red-600 transition-all flex items-center justify-center gap-1.5 text-xs font-extrabold shadow-sm shrink-0 flex-1 sm:flex-initial"
                         title="Delete Document"
                       >
@@ -2445,7 +2445,7 @@ const AdminDashboard = () => {
                         <span>Update</span>
                       </button>
                       <button
-                        onClick={() => handleDeleteNews(news.id)}
+                        onClick={() => handleDeleteNews(news.id || news._id)}
                         className="px-4 py-2 rounded-xl bg-red-50 hover:bg-red-600 hover:text-white text-red-600 transition-all flex items-center justify-center gap-1.5 text-xs font-extrabold shadow-sm shrink-0 flex-1 sm:flex-initial"
                         title="Delete News"
                       >
@@ -2649,7 +2649,7 @@ const AdminDashboard = () => {
                         <span>Update</span>
                       </button>
                       <button
-                        onClick={() => handleDeleteMou(mou.id)}
+                        onClick={() => handleDeleteMou(mou.id || mou._id)}
                         className="px-4 py-2 rounded-xl bg-red-50 hover:bg-red-600 hover:text-white text-red-600 transition-all flex items-center justify-center gap-1.5 text-xs font-extrabold shadow-sm shrink-0 flex-1 sm:flex-initial"
                         title="Delete MOU"
                       >
@@ -3559,7 +3559,7 @@ const AdminDashboard = () => {
                         <span>Update</span>
                       </button>
                       <button
-                        onClick={() => handleDeleteTeam(member.id)}
+                        onClick={() => handleDeleteTeam(member.id || member._id)}
                         className="px-4 py-2 rounded-xl bg-red-50 hover:bg-red-600 hover:text-white text-red-600 transition-all flex items-center justify-center gap-1.5 text-xs font-extrabold shadow-sm shrink-0 flex-1 sm:flex-initial"
                         title="Delete Leader"
                       >
@@ -3671,7 +3671,7 @@ const AdminDashboard = () => {
                         <span>Update</span>
                       </button>
                       <button
-                        onClick={() => handleDeleteEvent(ev.id)}
+                        onClick={() => handleDeleteEvent(ev.id || ev._id)}
                         className="px-4 py-2 rounded-xl bg-red-50 hover:bg-red-600 hover:text-white text-red-600 transition-all flex items-center justify-center gap-1.5 text-xs font-extrabold shadow-sm shrink-0 flex-1 sm:flex-initial"
                         title="Delete Announcement"
                       >
@@ -3822,7 +3822,7 @@ const AdminDashboard = () => {
                         <span>Update</span>
                       </button>
                       <button
-                        onClick={() => handleDeleteInternship(int.id)}
+                        onClick={() => handleDeleteInternship(int.id || int._id)}
                         className="px-4 py-2 rounded-xl bg-red-50 hover:bg-red-600 hover:text-white text-red-600 transition-all flex items-center justify-center gap-1.5 text-xs font-extrabold shadow-sm shrink-0 flex-1 sm:flex-initial"
                         title="Delete Internship"
                       >
@@ -4007,7 +4007,7 @@ const AdminDashboard = () => {
                         <span>Update</span>
                       </button>
                       <button
-                        onClick={() => handleDeleteScholarship(schol.id)}
+                        onClick={() => handleDeleteScholarship(schol.id || schol._id)}
                         className="px-4 py-2 rounded-xl bg-red-50 hover:bg-red-600 hover:text-white text-red-600 transition-all flex items-center justify-center gap-1.5 text-xs font-extrabold shadow-sm shrink-0 flex-1 sm:flex-initial"
                         title="Delete Scholarship"
                       >
@@ -6002,4 +6002,6 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
+
 
