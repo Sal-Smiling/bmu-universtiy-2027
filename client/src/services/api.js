@@ -26,7 +26,7 @@ apiClient.interceptors.request.use((config) => {
  */
 export const fetchPrograms = async (params = {}) => {
   try {
-    const response = await apiClient.get('/programs', { params });
+    const response = await apiClient.get('/programs', { params: { ...params, _t: Date.now() } });
     return response.data.data;
   } catch (error) {
     console.warn('[API Service]: Backend offline or unreachable. Using local fallback programsData.');
@@ -53,7 +53,7 @@ export const fetchPrograms = async (params = {}) => {
  */
 export const fetchNews = async (params = {}) => {
   try {
-    const response = await apiClient.get('/news', { params });
+    const response = await apiClient.get('/news', { params: { ...params, _t: Date.now() } });
     return response.data.data;
   } catch (error) {
     console.warn('[API Service]: Backend offline or unreachable. Using local fallback newsData.');
@@ -185,7 +185,7 @@ export const reorderTeamMember = async (id, direction) => {
 
 export const fetchEvents = async (params = {}) => {
   try {
-    const response = await apiClient.get('/events', { params });
+    const response = await apiClient.get('/events', { params: { ...params, _t: Date.now() } });
     return response.data.data;
   } catch (error) {
     console.warn('[API Service]: Backend events unreachable.');
@@ -210,7 +210,7 @@ export const deleteEvent = async (id) => {
 
 export const fetchInternships = async (params = {}) => {
   try {
-    const response = await apiClient.get('/internships', { params });
+    const response = await apiClient.get('/internships', { params: { ...params, _t: Date.now() } });
     if (response.data && Array.isArray(response.data.data)) {
       return response.data.data;
     }
@@ -243,7 +243,7 @@ export const deleteInternship = async (id) => {
 
 export const fetchScholarships = async (params = {}) => {
   try {
-    const response = await apiClient.get('/scholarships', { params });
+    const response = await apiClient.get('/scholarships', { params: { ...params, _t: Date.now() } });
     return response.data;
   } catch (error) {
     console.warn('[API Service]: Backend scholarships unreachable.');
@@ -270,7 +270,7 @@ export const deleteScholarship = async (id) => {
 
 export const fetchCampusLife = async (params = {}) => {
   try {
-    const response = await apiClient.get('/campus-life', { params });
+    const response = await apiClient.get('/campus-life', { params: { ...params, _t: Date.now() } });
     if (response.data && Array.isArray(response.data.data)) {
       return response.data.data;
     }
@@ -303,7 +303,7 @@ export const deleteCampusLife = async (id) => {
 
 export const fetchCommunityServices = async (params = {}) => {
   try {
-    const response = await apiClient.get('/community-services', { params });
+    const response = await apiClient.get('/community-services', { params: { ...params, _t: Date.now() } });
     if (response.data && Array.isArray(response.data.data)) {
       return response.data.data;
     }
@@ -335,7 +335,7 @@ export const deleteCommunityService = async (id) => {
 // --- Partners API (Global Reach) ---
 export const fetchPartners = async (params = {}) => {
   try {
-    const response = await apiClient.get('/partners', { params });
+    const response = await apiClient.get('/partners', { params: { ...params, _t: Date.now() } });
     if (response.data && Array.isArray(response.data.data)) {
       return response.data.data;
     }
@@ -367,7 +367,7 @@ export const deletePartner = async (id) => {
 // --- Partnerships & MOU API ---
 export const fetchPartnerships = async (params = {}) => {
   try {
-    const response = await apiClient.get('/partnerships', { params });
+    const response = await apiClient.get('/partnerships', { params: { ...params, _t: Date.now() } });
     if (response.data && Array.isArray(response.data.data)) {
       return response.data.data;
     }
@@ -401,7 +401,7 @@ export const deletePartnership = async (id) => {
 // ==========================================
 export const fetchFaculties = async () => {
   try {
-    const response = await apiClient.get('/faculties');
+    const response = await apiClient.get('/faculties', { params: { _t: Date.now() } });
     return response.data.data;
   } catch (error) {
     console.error('Error fetching faculties:', error);
@@ -440,3 +440,4 @@ export const deleteFaculty = async (id) => {
 };
 
 export default apiClient;
+
